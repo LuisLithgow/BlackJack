@@ -12,6 +12,8 @@ $(document).ready(function() {
   var $stand = document.querySelector('#standBtn');
   var $reset = document.querySelector('#resetBtn');
 
+  var cardValue1= [];
+  var cardValue2 = [];
   function createDeck() {
     for (var i = 0; i < values.length; i++) {
       for (var j = 0; j < suits.length; j++) {
@@ -21,7 +23,7 @@ $(document).ready(function() {
         // console.log(cardDeck);
       }
     }
-    $('#startBtn').on('click', startGame);
+
   };
   createDeck();
 
@@ -55,11 +57,12 @@ function blackJackValue() {
   console.log(card1);
   console.log(card2);
   // Attempting to invoke to get in iteger value for each card
-  var cardValue1 = convertValue(card1);
-  var cardValue2 = convertValue(card2);
+  cardValue1.push(convertValue(card1));
+  cardValue2.push(convertValue(card2));
   console.log(cardValue1 , cardValue2);
-  return cardValue1 + cardValue2 ;
   $('#startBtn').on('click', startGame);
+  return cardValue1 + cardValue2 ;
+  // $('#startBtn').on('click', startGame);
 };
 blackJackValue();
 
@@ -72,11 +75,13 @@ function convertValue(card) {
   } else {
     return parseInt(card[0]);
   }
+
 };
 // convertValue();
 
 function startGame() {
   // Adding a card to the dealer and users hand.
+  console.log('game on');
   dealerHand.push(cardValue1.shift() );
   dealerHand.push(cardValue1.shift() );
   $('#dealerSide').append(dealerHand);
@@ -94,6 +99,8 @@ function startGame() {
 // startGame();
 
     function hitMe() {
+      // console.log(cardDeck)
+      console.log(cardValue1)
       userHand.push(cardDeck.shift() );
       $('#userSide').append(userHand[userHand.length -1]);
       // console.log(userHand);
