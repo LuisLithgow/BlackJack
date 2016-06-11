@@ -7,13 +7,17 @@ $(document).ready(function() {
     // New card values are going to pushed in the empty cardDeck array.
   var cardDeck = [];
 
+  var dealerScore;
+  var userScore;
+
+
   var $start = document.querySelector('#startBtn');
   var $hit = document.querySelector('#hitBtn');
   var $stand = document.querySelector('#standBtn');
   var $reset = document.querySelector('#resetBtn');
 
-  var cardValue1= [];
-  var cardValue2 = [];
+  // var cardValue1= [];
+  // var cardValue2 = [];
   function createDeck() {
     for (var i = 0; i < values.length; i++) {
       for (var j = 0; j < suits.length; j++) {
@@ -23,7 +27,6 @@ $(document).ready(function() {
         // console.log(cardDeck);
       }
     }
-
   };
   createDeck();
 
@@ -45,22 +48,21 @@ shuffle();
 function blackJackValue() {
   var randNum1 = Math.floor(Math.random() * cardDeck.length);
   var randNum2 = Math.floor(Math.random() * cardDeck.length);
-  console.log(randNum1);
-  console.log(randNum2);
-  console.log(cardDeck);
+  // console.log(randNum1);
+  // console.log(randNum2);
+    // console.log(cardDeck);
 
   while (randNum1 === randNum2) {
     randNum2 = Math.floor(Math.random() * cardDeck.length);
   }
   var card1 = cardDeck[randNum1];
   var card2 = cardDeck[randNum2];
-  console.log(card1);
-  console.log(card2);
+  // console.log(card1);
+  // console.log(card2);
   // Attempting to invoke to get in iteger value for each card
-  cardValue1.push(convertValue(card1));
-  cardValue2.push(convertValue(card2));
-  console.log(cardValue1 , cardValue2);
-  $('#startBtn').on('click', startGame);
+  var cardValue1 = convertValue(card1);
+  var cardValue2 = convertValue(card2);
+  // console.log(cardValue1 , cardValue2);
   return cardValue1 + cardValue2 ;
   // $('#startBtn').on('click', startGame);
 };
@@ -68,31 +70,41 @@ blackJackValue();
 
 function convertValue(card) {
   // console.log("card = ", card)
-  if (card[0] === 'A') {
+
+  if (card[0]  === 'A') {
     return 11;
   } else if (card[0] === 'J' || card[0] === 'Q' || card[0] === 'K' || card.length === 3){
     return 10;
   } else {
     return parseInt(card[0]);
   }
-
 };
-// convertValue();
+
+
+$('#startBtn').off().on('click', startGame);
 
 function startGame() {
   // Adding a card to the dealer and users hand.
-  console.log('game on');
-  dealerHand.push(cardValue1.shift() );
-  dealerHand.push(cardValue1.shift() );
+  console.log(cardDeck);
+  dealerHand.push(cardDeck.shift() );
+  dealerHand.push(cardDeck.shift() );
   $('#dealerSide').append(dealerHand);
-    // console.log(dealerHand);
-  userHand.push(cardValue2.shift() );
-  userHand.push(cardValue2.shift() );
+  // Appending converted values
+  dealerScore = $("#dealerSum").append(convertValue(dealerHand[0]) + convertValue(dealerHand[1])  );
+  // $("#dealerSum").append(convertValue(dealerHand[1]) );
+  console.log(dealerHand + " dealer hand");
+
+  userHand.push(cardDeck.shift() );
+  userHand.push(cardDeck.shift() );
   $('#userSide').append(userHand);
-  // cardDeck.pop(cardDeck[0]);
+// APPENDING  CONVERTED VALUES
+ userScore = $("#userSum").append(convertValue(userHand[0]) + convertValue(userHand[1]) ).text();
+  console.log(userHand + " user Hand");
+  console.log(userScore);
+
   // Event listeners
-  $('#hitBtn').click(hitMe);
-  $('#standBtn').click(stand);
+  $('#hitBtn').off().click(hitMe);
+  $('#standBtn').off().click(stand);
   // $('#resetBtn').click(resetGame);
   // console.log(cardDeck);
 };
@@ -100,23 +112,31 @@ function startGame() {
 
     function hitMe() {
       // console.log(cardDeck)
-      console.log(cardValue1)
       userHand.push(cardDeck.shift() );
       $('#userSide').append(userHand[userHand.length -1]);
+      $('#userSum').remove();
+      $('.userScore').after('<div id="userSum">');
+      console.log(userHand);
+      // console.log(convertValue(userHand[0] + userHand[1] + userHand[2]) );
+      $("#userSum").append(convertValue(userHand[2]) + userScore);
+      // return userScore;
       // console.log(userHand);
+      // console.log(userScore);
     };
     function stand() {
       dealerHand.push(cardDeck.shift() );
       $('#dealerSide').append(dealerHand[dealerHand.length -1]);
+
       // console.log(dealerHand);
     };
 // We want to check to see who is the winner and what will the ace value to.
 
 function checkWinner() {
-  if (userHand > 21 || dealerHand === 21 ) {
+  if (userScore > 21 || dealerScore === 21 ) {
     console.log("you lose");
   } else {}
 };
+// checkWinner();
 
 
 
