@@ -331,7 +331,6 @@ function startGame() {
 // startGame();
 
 
-
     function hitMe() {
       // console.log(cardDeck)
       userHand.push(cardDeck.shift() );
@@ -346,6 +345,7 @@ function startGame() {
       // return userScore;
       // console.log(userHand);
       // console.log(userScore);
+      checkWinner();
     };
     function stand() {
       dealerHand.push(cardDeck.shift() );
@@ -357,8 +357,10 @@ function startGame() {
 
 function checkWinner() {
   if (userScore > 21 || dealerScore === 21 ) {
-    console.log("you lose");
-  } else {}
+    alert("you lose");
+  } else if(userScore = 21 || userScore > dealerScore) {
+    alert('You won!')
+  }
 };
 // checkWinner();
 
