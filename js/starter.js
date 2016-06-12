@@ -80,6 +80,22 @@ function convertValue(card) {
   }
 };
 
+// Matching dealerHand 's value with the UTF-8 card codes
+function getCard() {
+  if (dealerHand === '2D' ) {
+    $('#dealer-hand').append('&#127170;');
+  } else if (dealerHand === '2H'){
+    $('#dealer-hand').append('&#127170;');
+  } else if(dealerHand == '2S') {
+    $('#dealer-hand').append('&#127138;');
+  } else if(dealerHand === '2C') {
+    $('#dealer-hand').append('&#127186;');
+  } else if(dealerHand === '3D') {
+    $('#dealer-hand').append('&#127171;');
+  } else if(dealerHand === '3H') {
+    $('#dealer-hand').append('&#127155;');
+  }
+};
 
 $('#startBtn').off().on('click', startGame);
 
@@ -89,6 +105,7 @@ function startGame() {
   dealerHand.push(cardDeck.shift() );
   dealerHand.push(cardDeck.shift() );
   $('#dealerSide').append(dealerHand);
+  $('#dealer-hand').append(getCard);
   // Appending converted values
   dealerScore = $("#dealerSum").append(convertValue(dealerHand[0]) + convertValue(dealerHand[1])  );
   // $("#dealerSum").append(convertValue(dealerHand[1]) );
@@ -117,8 +134,8 @@ function startGame() {
       $('#userSum').remove();
       $('.userScore').after('<div id="userSum">');
       console.log(userHand);
-      // console.log(convertValue(userHand[0] + userHand[1] + userHand[2]) );
-      $("#userSum").append(convertValue(userHand[2]) + userScore);
+      console.log((convertValue(userHand[2]) + userScore));
+      // $("#userSum").append(convertValue(userHand[2]) + userScore);
       // return userScore;
       // console.log(userHand);
       // console.log(userScore);
@@ -137,6 +154,11 @@ function checkWinner() {
   } else {}
 };
 // checkWinner();
+
+$('#resetBtn').on('click', function(){
+  location.reload();
+})
+
 
 
 
