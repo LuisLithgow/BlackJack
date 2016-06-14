@@ -9,7 +9,8 @@ $(document).ready(function() {
 
   var dealerScore = 0;
   var userScore = 0;
-
+// TRY THIS BY JASON
+// ['♠','♥','♦','♣'].map( sym=> [...Array(13).keys()] .map( num => ({ 0:'A', 10:'J', 11:'Q', 12:'K' }[num] || num+1 ) + sym ) )
 
   var $start = document.querySelector('#startBtn');
   var $hit = document.querySelector('#hitBtn');
